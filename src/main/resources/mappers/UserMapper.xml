@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yang.mapper.UserMapper">
+    <insert id="insert">
+        insert into  user
+            (name,gender,username,password,is_admin)
+        values
+            (#{name},#{gender},#{username},#{password},#{isAdmin})
+    </insert>
+    <update id="update">
+        update user
+        <set>
+            <if test="name!=null and name!=''">name=#{name},</if>
+            <if test="gender!=null">gender=#{gender},</if>
+            <if test="username!=null">username=#{username},</if>
+            <if test="password!=null and password!=''">password=#{password},</if>
+            <if test="isAdmin!=null">is_admin=#{isAdmin},</if>
+        </set>
+        where
+            id=#{id}
+    </update>
+    <delete id="deleteById">
+        delete from user
+        where id=#{studentId}
+    </delete>
+
+    <select id="adminLogin" resultType="com.yang.pojo.User">
+        select
+            id,name,gender,username,password,is_admin,create_time,update_time
+        from
+            user
+        where
+            username=#{username} and password=#{password} and is_admin=true
+    </select>
+    <select id="studentLogin" resultType="com.yang.pojo.User">
+        select
+            id,name,gender,username,password,is_admin,create_time,update_time
+        from
+            user
+        where
+            username=#{username} and password=#{password} and is_admin=false
+    </select>
+    <select id="selectById" resultType="com.yang.pojo.User">
+        select
+            id,name,gender,username,password,is_admin,create_time,update_time
+        from
+            user
+        where
+            id=#{id}
+    </select>
+    <select id="selectList" resultType="com.yang.pojo.User">
+        select
+            id,name,gender,username,password,is_admin,create_time,update_time
+        from
+            user
+    </select>
+</mapper>

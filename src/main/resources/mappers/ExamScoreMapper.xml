@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yang.mapper.ExamScoreMapper">
+
+
+    <insert id="insertList">
+        insert into exam_score
+            (student_id,chinese_score,math_score,english_score,total_score,exam_id)
+        values
+            <foreach collection="list"  item="es" separator=",">
+                (#{es.studentId},#{es.chineseScore},#{es.mathScore},
+                #{es.englishScore},#{es.totalScore},#{es.examId})
+            </foreach>
+    </insert>
+    <update id="update">
+        update exam_score
+        <set>
+            <if test="studentId != null">student_id = #{studentId},</if>
+            <if test="examId != null">exam_id = #{examId},</if>
+            <if test="totalScore != null">total_score = #{totalScore},</if>
+            <if test="chineseScore != null">chinese_score = #{chineseScore},</if>
+            <if test="mathScore != null">math_score = #{mathScore},</if>
+            <if test="englishScore != null">english_score = #{englishScore}</if>
+        </set>
+        where
+        id = #{id}
+    </update>
+
+    <delete id="deleteByExamId">
+        delete from exam_score where exam_id=#{examId}
+    </delete>
+    <delete id="deleteByStudentId">
+        delete from exam_score where student_id=#{studentId}
+    </delete>
+    <select id="selectListByStudentId" resultType="com.yang.pojo.ExamScore">
+        select
+            id,student_id,chinese_score,math_score,english_score,total_score,exam_id,create_time,update_time
+        from
+            exam_score
+        where
+            student_id=#{studentId}
+    </select>
+    <select id="selectByStudentIdAndExamId" resultType="com.yang.pojo.ExamScore">
+        select
+            id,student_id,chinese_score,math_score,english_score,total_score,exam_id,create_time,update_time
+        from
+            exam_score
+        where
+            student_id=#{studentId} and exam_id=#{examId}
+    </select>
+    <select id="selectListByExamId" resultType="com.yang.pojo.ExamScore">
+        select
+            id,student_id,chinese_score,math_score,english_score,total_score,exam_id,create_time,update_time
+        from
+            exam_score
+        where
+            exam_id=#{examId}
+    </select>
+
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yang.mapper.ExamMapper">
+    <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into exam (name,time)
+        values (#{name},#{time})
+    </insert>
+    <update id="update">
+        update exam
+        <set>
+            <if test="name!=null and name!=''">name=#{name},</if>
+            <if test="time!=null">time=#{time},</if>
+        </set>
+        where
+            id=#{id}
+    </update>
+    <delete id="deleteById">
+        delete from exam where id=#{examId}
+    </delete>
+    <select id="selectById" resultType="com.yang.pojo.Exam">
+        select
+            id,name,time,create_time,update_time
+        from
+            exam
+        where
+            id=#{examId}
+    </select>
+    <select id="selectList" resultType="com.yang.pojo.Exam">
+        select
+            id,name,time,create_time,update_time
+        from
+            exam
+    </select>
+
+</mapper>
