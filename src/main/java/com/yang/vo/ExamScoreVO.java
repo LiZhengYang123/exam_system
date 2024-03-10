@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class ExamScoreVO {
     private Long id;
     private Long studentId;
+    private String studentName;
     private Long examId;
     private Float chineseScore;
     private Float mathScore;

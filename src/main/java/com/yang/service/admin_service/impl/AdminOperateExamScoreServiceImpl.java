@@ -2,7 +2,9 @@ package com.yang.service.admin_service.impl;
 
 import com.yang.dto.ExamScoreDTO;
 import com.yang.mapper.ExamScoreMapper;
+import com.yang.mapper.UserMapper;
 import com.yang.pojo.ExamScore;
+import com.yang.pojo.User;
 import com.yang.service.admin_service.AdminOperateExamScoreService;
 import com.yang.vo.ExamScoreVO;
 import com.yang.vo.ExamVO;
@@ -22,6 +24,8 @@ public class AdminOperateExamScoreServiceImpl implements AdminOperateExamScoreSe
     @Autowired
     private ExamScoreMapper examScoreMapper;
 
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public Result getSpecialExamAllScore(Long examId) {
@@ -41,6 +45,8 @@ public class AdminOperateExamScoreServiceImpl implements AdminOperateExamScoreSe
         ExamScore examScore=examScoreMapper.selectByStudentIdAndExamId(studentId,examId);
         ExamScoreVO examScoreVO=new ExamScoreVO();
         BeanUtils.copyProperties(examScore,examScoreVO);
+        User user = userMapper.selectById(studentId);
+        examScoreVO.setStudentName(user.getName());
         return Result.success(examScoreVO);
     }
 
